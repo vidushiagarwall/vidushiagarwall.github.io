@@ -42,10 +42,13 @@ section{padding:6rem 4rem}
 .skill-group h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--warm);margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid #3a3020}
 .skill-item{display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;font-size:.9rem;color:#c8b89a}
 .skill-item::before{content:'?';font-size:.4rem;color:var(--rust)}
-#interests{background:var(--soft)}
-.tags{display:flex;flex-wrap:wrap;gap:1rem}
-.tag{padding:.8rem 1.6rem;border:1px solid var(--warm);font-family:'Cormorant Garamond',serif;font-size:1.05rem;transition:.3s}
-.tag:hover{background:var(--ink);color:var(--cream);transform:translateY(-2px)}
+#activities{background:var(--soft)}
+.act-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
+.act-card{background:#fff;padding:2.5rem;border-top:3px solid var(--rust);transition:.3s;box-shadow:0 2px 20px rgba(0,0,0,.04)}
+.act-card:hover{transform:translateY(-6px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.act-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
+.act-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;margin-bottom:.6rem}
+.act-desc{color:var(--muted);font-size:.9rem;line-height:1.7}
 #contact{background:var(--ink);color:var(--cream);text-align:center;padding:8rem 4rem}
 .contact-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,3.5rem);font-weight:300;margin-bottom:1.5rem}
 .contact-heading em{font-style:italic;color:var(--warm)}
@@ -65,7 +68,7 @@ footer{background:#0e0c0a;color:var(--muted);text-align:center;padding:2rem;font
 <p class="eyebrow">Portfolio</p>
 <h1 class="name">Vidushi<br><em>Agarwal</em></h1>
 <div class="divider"></div>
-<p class="tagline">Class XI ISC Student — Curious learner, creative thinker, aspiring achiever.</p>
+<p class="tagline">Class XI ISC Student - Curious learner, creative thinker, aspiring achiever.</p>
 </div></div>
 <div class="hero-right">
 <div class="stat"><div class="stat-num">XI</div><div class="stat-label">Current Class</div></div>
@@ -75,7 +78,7 @@ footer{background:#0e0c0a;color:var(--muted);text-align:center;padding:2rem;font
 </section>
 <section id="about">
 <div><p class="label">About</p><h2 class="about-heading">Passionate.<br>Determined.<br><em>Always learning.</em></h2></div>
-<div><p class="about-text">Hi! I am Vidushi Agarwal, a Class XI ISC student with a love for learning and exploring new ideas. I believe in working hard, staying curious, and pushing my limits every single day.</p><p class="about-text">Whether it is diving into a challenging subject, picking up a new skill, or expressing creativity, I bring dedication and enthusiasm to everything I do.</p></div>
+<div><p class="about-text">Hi! I am Vidushi Agarwal, a Class XI ISC student with a love for learning and exploring new ideas. I believe in working hard, staying curious, and pushing my limits every single day.</p><p class="about-text">Whether it is on the cricket field, at an MUN conference, or across a chess board - I bring focus, strategy, and enthusiasm to everything I do.</p></div>
 </section>
 <section>
 <p class="label">Education</p>
@@ -87,12 +90,28 @@ footer{background:#0e0c0a;color:var(--muted);text-align:center;padding:2rem;font
 <div class="skills-grid">
 <div class="skill-group"><h3>Academic</h3><div class="skill-item">Physics</div><div class="skill-item">Chemistry</div><div class="skill-item">Mathematics</div><div class="skill-item">English</div></div>
 <div class="skill-group"><h3>Technical</h3><div class="skill-item">MS Office</div><div class="skill-item">HTML &amp; CSS</div><div class="skill-item">GitHub</div></div>
-<div class="skill-group"><h3>Soft Skills</h3><div class="skill-item">Communication</div><div class="skill-item">Time Management</div><div class="skill-item">Teamwork</div></div>
+<div class="skill-group"><h3>Soft Skills</h3><div class="skill-item">Public Speaking</div><div class="skill-item">Strategic Thinking</div><div class="skill-item">Teamwork</div></div>
 </div>
 </section>
-<section id="interests">
-<p class="label">Interests</p>
-<div class="tags"><div class="tag">Reading</div><div class="tag">Art</div><div class="tag">Music</div><div class="tag">Writing</div><div class="tag">Technology</div></div>
+<section id="activities">
+<p class="label">Favourite Activities</p>
+<div class="act-grid">
+<div class="act-card">
+<span class="act-icon">&#127951;</span>
+<h3 class="act-title">Cricket</h3>
+<p class="act-desc">A game of patience, precision, and teamwork. I love every moment on the field - from the toss to the final over.</p>
+</div>
+<div class="act-card">
+<span class="act-icon">&#127760;</span>
+<h3 class="act-title">Model UN</h3>
+<p class="act-desc">Debating world issues, drafting resolutions, and stepping into the shoes of diplomats. MUN sharpens my voice and my mind.</p>
+</div>
+<div class="act-card">
+<span class="act-icon">&#9823;</span>
+<h3 class="act-title">Chess</h3>
+<p class="act-desc">64 squares of pure strategy. Chess teaches me to think ahead, stay calm, and find clarity in complexity.</p>
+</div>
+</div>
 </section>
 <section id="contact">
 <h2 class="contact-heading">Let us <em>connect.</em></h2>
