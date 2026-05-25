@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vidushi Agarwal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--cream:#faf7f2;--ink:#1a1612;--rust:#b5451b;--warm:#d4a882;--muted:#8a7968;--soft:#ede8e0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.hero-left{background:var(--ink);display:flex;flex-direction:column;justify-content:flex-end;padding:4rem;position:relative;overflow:hidden}
+.hero-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%,#3a2a1a 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,#2a1a0a 0%,transparent 50%)}
+.hero-content{position:relative;z-index:1}
+.eyebrow{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--warm);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards}
+.name{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5rem);font-weight:300;line-height:1.05;color:var(--cream);opacity:0;animation:fadeUp .8s .4s forwards}
+.name em{font-style:italic;color:var(--warm)}
+.divider{width:40px;height:1px;background:var(--rust);margin:2rem 0;opacity:0;animation:fadeUp .8s .5s forwards}
+.tagline{font-size:.9rem;color:var(--muted);line-height:1.7;max-width:280px;opacity:0;animation:fadeUp .8s .6s forwards}
+.hero-right{display:flex;flex-direction:column;justify-content:center;padding:4rem;gap:3rem}
+.stat{opacity:0;animation:fadeLeft .8s forwards}
+.stat:nth-child(1){animation-delay:.5s}.stat:nth-child(2){animation-delay:.65s}.stat:nth-child(3){animation-delay:.8s}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--rust);line-height:1}
+.stat-label{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+section{padding:6rem 4rem}
+.label{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rust);margin-bottom:3rem;display:flex;align-items:center;gap:1rem}
+.label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--rust)}
+#about{background:var(--soft);display:grid;grid-template-columns:1fr 1.4fr;gap:6rem;align-items:center}
+.about-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.2}
+.about-heading em{font-style:italic;color:var(--rust)}
+.about-text{font-size:1rem;line-height:1.85;color:#4a3f32}
+.about-text p+p{margin-top:1.2rem}
+.edu-card{border-left:2px solid var(--rust);padding:2rem 2.5rem;margin-bottom:1.5rem;background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.04);transition:.3s}
+.edu-card:hover{transform:translateX(6px);box-shadow:0 4px 30px rgba(0,0,0,.08)}
+.edu-school{font-family:'Cormorant Garamond',serif;font-size:1.5rem}
+.edu-detail{color:var(--muted);font-size:.85rem;margin-top:.4rem}
+#skills{background:var(--ink);color:var(--cream)}
+#skills .label{color:var(--warm)}#skills .label::after{background:var(--warm)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem}
+.skill-group h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--warm);margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid #3a3020}
+.skill-item{display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;font-size:.9rem;color:#c8b89a}
+.skill-item::before{content:'?';font-size:.4rem;color:var(--rust)}
+#interests{background:var(--soft)}
+.tags{display:flex;flex-wrap:wrap;gap:1rem}
+.tag{padding:.8rem 1.6rem;border:1px solid var(--warm);font-family:'Cormorant Garamond',serif;font-size:1.05rem;transition:.3s}
+.tag:hover{background:var(--ink);color:var(--cream);transform:translateY(-2px)}
+#contact{background:var(--ink);color:var(--cream);text-align:center;padding:8rem 4rem}
+.contact-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,3.5rem);font-weight:300;margin-bottom:1.5rem}
+.contact-heading em{font-style:italic;color:var(--warm)}
+.contact-sub{color:var(--muted);margin-bottom:3rem}
+.contact-links{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.contact-link{color:var(--cream);text-decoration:none;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 1.8rem;border:1px solid #3a3020;transition:.3s}
+.contact-link:hover{border-color:var(--rust);color:var(--warm);transform:translateY(-3px)}
+footer{background:#0e0c0a;color:var(--muted);text-align:center;padding:2rem;font-size:.75rem;letter-spacing:.1em}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+@media(max-width:768px){.hero{grid-template-columns:1fr}.hero-left{min-height:60vh;padding:3rem 2rem}.hero-right{padding:3rem 2rem;flex-direction:row;flex-wrap:wrap;gap:2rem}#about{grid-template-columns:1fr;gap:2rem}section{padding:4rem 2rem}}
+</style>
+</head>
+<body>
+<section class="hero">
+<div class="hero-left"><div class="hero-content">
+<p class="eyebrow">Portfolio</p>
+<h1 class="name">Vidushi<br><em>Agarwal</em></h1>
+<div class="divider"></div>
+<p class="tagline">Class XI ISC Student — Curious learner, creative thinker, aspiring achiever.</p>
+</div></div>
+<div class="hero-right">
+<div class="stat"><div class="stat-num">XI</div><div class="stat-label">Current Class</div></div>
+<div class="stat"><div class="stat-num">ISC</div><div class="stat-label">Board</div></div>
+<div class="stat"><div class="stat-num">&infin;</div><div class="stat-label">Curiosity</div></div>
+</div>
+</section>
+<section id="about">
+<div><p class="label">About</p><h2 class="about-heading">Passionate.<br>Determined.<br><em>Always learning.</em></h2></div>
+<div><p class="about-text">Hi! I am Vidushi Agarwal, a Class XI ISC student with a love for learning and exploring new ideas. I believe in working hard, staying curious, and pushing my limits every single day.</p><p class="about-text">Whether it is diving into a challenging subject, picking up a new skill, or expressing creativity, I bring dedication and enthusiasm to everything I do.</p></div>
+</section>
+<section>
+<p class="label">Education</p>
+<div class="edu-card"><div class="edu-school">Your School Name</div><div class="edu-detail">Class XI - ISC - 2024 to Present</div></div>
+<div class="edu-card"><div class="edu-school">Previous School</div><div class="edu-detail">Class X - ICSE - Completed 2024</div></div>
+</section>
+<section id="skills">
+<p class="label">Skills</p>
+<div class="skills-grid">
+<div class="skill-group"><h3>Academic</h3><div class="skill-item">Physics</div><div class="skill-item">Chemistry</div><div class="skill-item">Mathematics</div><div class="skill-item">English</div></div>
+<div class="skill-group"><h3>Technical</h3><div class="skill-item">MS Office</div><div class="skill-item">HTML &amp; CSS</div><div class="skill-item">GitHub</div></div>
+<div class="skill-group"><h3>Soft Skills</h3><div class="skill-item">Communication</div><div class="skill-item">Time Management</div><div class="skill-item">Teamwork</div></div>
+</div>
+</section>
+<section id="interests">
+<p class="label">Interests</p>
+<div class="tags"><div class="tag">Reading</div><div class="tag">Art</div><div class="tag">Music</div><div class="tag">Writing</div><div class="tag">Technology</div></div>
+</section>
+<section id="contact">
+<h2 class="contact-heading">Let us <em>connect.</em></h2>
+<p class="contact-sub">Feel free to reach out!</p>
+<div class="contact-links"><a class="contact-link" href="mailto:your@email.com">Email</a><a class="contact-link" href="https://github.com/vidushiagarwall">GitHub</a></div>
+</section>
+<footer>&copy; 2026 Vidushi Agarwal</footer>
+</body>
+</html>
