@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Take Care of Scotch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1a1208;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1.5rem 4rem;
+      gap: 1.8rem;
+    }
+    a.back {
+      align-self: flex-start;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #5a4030;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    a.back:hover { color: #c4a35a; }
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #c4a35a;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: #f5ede0;
+      text-align: center;
+      line-height: 1.2;
+    }
+    h1 em { font-style: italic; color: #d4a85a; }
+    .tagline {
+      font-size: 12px;
+      color: #5a4030;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+
+    .stage {
+      position: relative;
+      width: 210px;
+      height: 210px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .stage svg { width: 100%; height: 100%; }
+    .bubble {
+      position: absolute;
+      top: -10px;
+      right: -22px;
+      background: #2a1e0e;
+      border: 1px solid #c4a35a;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 12px;
+      color: #f5ede0;
+      white-space: nowrap;
+      display: none;
+    }
+
+    @keyframes pop { 0%{transform:scale(0)} 70%{transform:scale(1.12)} 100%{transform:scale(1)} }
+    @keyframes woof { 0%,100%{transform:rotate(-4deg)} 50%{transform:rotate(4deg)} }
+
+    .meters {
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .m-row { display: flex; align-items: center; gap: 12px; }
+    .m-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5a4030;
+      width: 72px;
+    }
+    .m-track {
+      flex: 1;
+      height: 4px;
+      background: #2e2010;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .m-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s cubic-bezier(.4,0,.2,1);
+    }
+    .f-hunger { background: #c4603a; }
+    .f-happy  { background: #c4a35a; }
+    .f-energy { background: #7a9e7e; }
+    .m-val {
+      font-size: 11px;
+      color: #5a4030;
+      width: 26px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .mood-card {
+      background: #211508;
+      border: 1px solid #2e2010;
+      border-radius: 12px;
+      padding: 14px 22px;
+      text-align: center;
+      max-width: 380px;
+      width: 100%;
+    }
+    .mood-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: #c4a35a;
+      line-height: 1.6;
+    }
+
+    .blanket {
+      font-size: 12px;
+      color: #c4603a;
+      background: #211508;
+      border: 1px solid #3a2010;
+      border-radius: 10px;
+      padding: 9px 18px;
+      text-align: center;
+      max-width: 380px;
+      width: 100%;
+      display: none;
+    }
+    .blanket.show { display: block; animation: pop 0.3s ease; }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 380px;
+      width: 100%;
+    }
+    .act-btn {
+      background: #211508;
+      border: 1px solid #2e2010;
+      border-radius: 14px;
+      padding: 18px 10px 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      transition: border-color 0.2s, background 0.2s, transform 0.1s;
+      font-family: inherit;
+    }
+    .act-btn:hover { background: #2e1c0a; border-color: #c4a35a; }
+    .act-btn:active { transform: scale(0.96); }
+    .act-icon { font-size: 24px; }
+    .act-label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5a4030;
+    }
+    .act-btn:hover .act-label { color: #c4a35a; }
+
+    .divider { width: 40px; height: 1px; background: #2e2010; }
+    .footer-txt {
+      font-size: 10px;
+      color: #3a2c20;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .footer-txt a { color: #5a4030; text-decoration: none; }
+    .footer-txt a:hover { color: #c4a35a; }
+  </style>
+</head>
+<body>
+
+  <a class="back" href="index.html">&#8592; back to portfolio</a>
+
+  <span class="eyebrow">Scotch's World</span>
+  <h1>Take care of <em>Scotch.</em></h1>
+  <p class="tagline">a fluffy brown poodle who runs the house</p>
+
+  <div class="stage" id="stage">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M148 148 Q172 128 163 108" fill="none" stroke="#7a4a20" stroke-width="11" stroke-linecap="round"/>
+      <circle cx="164" cy="105" r="12" fill="#8b5428" stroke="#6b3e18" stroke-width="0.8"/>
+      <ellipse cx="100" cy="148" rx="48" ry="38" fill="#7a4a20" stroke="#5e3614" stroke-width="1"/>
+      <circle cx="66"  cy="140" r="22" fill="#8b5428"/>
+      <circle cx="134" cy="140" r="22" fill="#8b5428"/>
+      <circle cx="100" cy="126" r="24" fill="#8b5428"/>
+      <circle cx="78"  cy="156" r="18" fill="#7a4a20"/>
+      <circle cx="122" cy="156" r="18" fill="#7a4a20"/>
+      <ellipse cx="100" cy="140" rx="22" ry="16" fill="#9e6335" opacity="0.5"/>
+      <rect x="74"  y="174" width="16" height="18" rx="8" fill="#6b3e18"/>
+      <rect x="110" y="174" width="16" height="18" rx="8" fill="#6b3e18"/>
+      <ellipse cx="82"  cy="191" rx="11" ry="6" fill="#5e3614"/>
+      <ellipse cx="118" cy="191" rx="11" ry="6" fill="#5e3614"/>
+      <ellipse cx="68"  cy="92" rx="15" ry="22" fill="#6b3e18" stroke="#5a3210" stroke-width="0.8"/>
+      <ellipse cx="132" cy="92" rx="15" ry="22" fill="#6b3e18" stroke="#5a3210" stroke-width="0.8"/>
+      <circle  cx="62"  cy="87" r="12" fill="#7a4a20"/>
+      <circle  cx="138" cy="87" r="12" fill="#7a4a20"/>
+      <circle cx="100" cy="84" r="38" fill="#8b5428" stroke="#6b3e18" stroke-width="1"/>
+      <circle cx="72"  cy="74" r="20" fill="#9e6335"/>
+      <circle cx="128" cy="74" r="20" fill="#9e6335"/>
+      <circle cx="100" cy="58" r="20" fill="#9e6335"/>
+      <circle cx="80"  cy="63" r="15" fill="#9e6335"/>
+      <circle cx="120" cy="63" r="15" fill="#9e6335"/>
+      <circle cx="100" cy="50" r="10" fill="#a86e3a"/>
+      <g id="eyes-h">
+        <path d="M84 86 Q90 79 96 86" fill="none" stroke="#2a1208" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M104 86 Q110 79 116 86" fill="none" stroke="#2a1208" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <g id="eyes-n" display="none">
+        <circle cx="90"  cy="87" r="5" fill="#1a0c04"/>
+        <circle cx="110" cy="87" r="5" fill="#1a0c04"/>
+        <circle cx="91.5" cy="85.5" r="1.8" fill="white"/>
+        <circle cx="111.5" cy="85.5" r="1.8" fill="white"/>
+      </g>
+      <g id="eyes-s" display="none">
+        <path d="M84 82 Q90 89 96 82" fill="none" stroke="#2a1208" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M104 82 Q110 89 116 82" fill="none" stroke="#2a1208" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <ellipse cx="100" cy="99" rx="7" ry="5" fill="#2a1208"/>
+      <ellipse cx="98.5" cy="97.5" rx="2" ry="1.2" fill="#4a2a14" opacity="0.6"/>
+      <path id="m-h" d="M92 106 Q100 115 108 106" fill="none" stroke="#2a1208" stroke-width="2" stroke-linecap="round"/>
+      <path id="m-n" d="M93 108 Q100 110 107 108" fill="none" stroke="#2a1208" stroke-width="2" stroke-linecap="round" display="none"/>
+      <path id="m-s" d="M92 111 Q100 105 108 111" fill="none" stroke="#2a1208" stroke-width="2" stroke-linecap="round" display="none"/>
+    </svg>
+    <div class="bubble" id="bubble"></div>
+  </div>
+
+  <div class="meters">
+    <div class="m-row">
+      <span class="m-label">hunger</span>
+      <div class="m-track"><div class="m-fill f-hunger" id="b-hunger" style="width:80%"></div></div>
+      <span class="m-val" id="v-hunger">80</span>
+    </div>
+    <div class="m-row">
+      <span class="m-label">happiness</span>
+      <div class="m-track"><div class="m-fill f-happy" id="b-happy" style="width:80%"></div></div>
+      <span class="m-val" id="v-happy">80</span>
+    </div>
+    <div class="m-row">
+      <span class="m-label">energy</span>
+      <div class="m-track"><div class="m-fill f-energy" id="b-energy" style="width:80%"></div></div>
+      <span class="m-val" id="v-energy">80</span>
+    </div>
+  </div>
+
+  <div class="mood-card">
+    <p class="mood-text" id="mood-text">"Scotch is happy and absolutely thriving."</p>
+  </div>
+
+  <div class="blanket" id="blanket">😤 Scotch threw your blanket on the floor. Again.</div>
+
+  <div class="actions">
+    <button class="act-btn" onclick="act('feed')">
+      <span class="act-icon">🌾</span>
+      <span class="act-label">Makhana</span>
+    </button>
+    <button class="act-btn" onclick="act('play')">
+      <span class="act-icon">🐔</span>
+      <span class="act-label">Squeaky toy</span>
+    </button>
+    <button class="act-btn" onclick="act('walk')">
+      <span class="act-icon">🚴</span>
+      <span class="act-label">Go for a walk</span>
+    </button>
+    <button class="act-btn" onclick="act('sleep')">
+      <span class="act-icon">🛏️</span>
+      <span class="act-label">Let him rest</span>
+    </button>
+  </div>
+
+  <div class="divider"></div>
+  <p class="footer-txt">tap scotch to give him a pat &nbsp;&mdash;&nbsp; <a href="index.html">back to portfolio</a></p>
+
+  <script>
+    const S = { hunger: 80, happy: 80, energy: 80 };
+    let btick = 0;
+    const clamp = v => Math.max(0, Math.min(100, Math.round(v)));
+
+    function render() {
+      ['hunger','happy','energy'].forEach(k => {
+        document.getElementById('b-'+k).style.width = S[k]+'%';
+        document.getElementById('v-'+k).textContent = S[k];
+      });
+      updateFace();
+    }
+
+    function getMood() {
+      if (S.hunger < 20) return 'hungry';
+      if (S.energy  < 15) return 'tired';
+      const avg = (S.hunger + S.happy + S.energy) / 3;
+      if (avg >= 70) return 'happy';
+      if (avg >= 40) return 'okay';
+      return 'sad';
+    }
+
+    function updateFace() {
+      const m = getMood();
+      const msgs = {
+        happy:  '"Scotch is happy and absolutely thriving."',
+        okay:   '"Scotch is fine. But he could use your attention."',
+        hungry: '"Scotch is starving. He is giving you the look."',
+        tired:  '"Scotch is exhausted. He needs his beauty sleep."',
+        sad:    '"Scotch is heartbroken. Please show him some love."'
+      };
+      document.getElementById('mood-text').textContent = msgs[m];
+      const show = (id, v) => document.getElementById(id).setAttribute('display', v ? '' : 'none');
+      show('eyes-h', m === 'happy');
+      show('eyes-n', m === 'okay');
+      show('eyes-s', ['sad','hungry','tired'].includes(m));
+      show('m-h', m === 'happy');
+      show('m-n', m === 'okay');
+      show('m-s', ['sad','hungry','tired'].includes(m));
+    }
+
+    function showBubble(txt) {
+      const b = document.getElementById('bubble');
+      b.textContent = txt;
+      b.style.display = 'block';
+      b.style.animation = 'pop 0.25s ease';
+      clearTimeout(b._t);
+      b._t = setTimeout(() => { b.style.display = 'none'; }, 2400);
+    }
+
+    function animateStage(css, dur) {
+      const el = document.getElementById('stage');
+      el.style.animation = css;
+      clearTimeout(el._t);
+      el._t = setTimeout(() => el.style.animation = '', dur);
+    }
+
+    function act(type) {
+      if (type === 'feed') {
+        S.hunger = clamp(S.hunger + 25);
+        S.happy  = clamp(S.happy  + 5);
+        showBubble('Makhana!! 😋');
+        animateStage('woof 0.4s ease 2', 900);
+      } else if (type === 'play') {
+        if (S.energy < 15) { showBubble('Too tired... 😴'); return; }
+        S.happy  = clamp(S.happy  + 22);
+        S.energy = clamp(S.energy - 15);
+        showBubble('SQUEAK!! 🐔');
+        animateStage('woof 0.35s ease 3', 1100);
+      } else if (type === 'walk') {
+        if (S.energy < 20) { showBubble('Need rest first! 😴'); return; }
+        S.happy  = clamp(S.happy  + 18);
+        S.energy = clamp(S.energy - 22);
+        S.hunger = clamp(S.hunger - 12);
+        showBubble('Zoomies!! 🚴');
+        animateStage('woof 0.5s ease 3', 1600);
+      } else if (type === 'sleep') {
+        S.energy = clamp(S.energy + 32);
+        S.happy  = clamp(S.happy  + 5);
+        showBubble('zzzzz 💤');
+      }
+      render();
+    }
+
+    document.getElementById('stage').addEventListener('click', function(e) {
+      if (e.target.closest('button')) return;
+      S.happy = clamp(S.happy + 4);
+      showBubble('🐾');
+      render();
+    });
+
+    setInterval(() => {
+      S.hunger = clamp(S.hunger - 2);
+      S.happy  = clamp(S.happy  - 1.2);
+      S.energy = clamp(S.energy - 1.5);
+      btick++;
+      if (btick >= 8 && Math.random() < 0.3) {
+        const el = document.getElementById('blanket');
+        el.classList.add('show');
+        clearTimeout(el._t);
+        el._t = setTimeout(() => el.classList.remove('show'), 4000);
+        btick = 0;
+      }
+      render();
+    }, 5000);
+
+    render();
+  </script>
+</body>
+</html>
